@@ -8,7 +8,7 @@
 
   <!-- Optional parameters -->
   <arg name="vehicle" default="true" description="launch vehicle"/>
-  <arg name="system" default="false" description="launch system"/>
+  <arg name="system" default="true" description="launch system"/>
   <arg name="map" default="true" description="launch map"/>
   <arg name="sensing" default="true" description="launch sensing"/>
   <arg name="localization" default="true" description="launch localization"/>
@@ -57,6 +57,11 @@
       <arg name="sensor_model" value="$(var sensor_model)"/>
       <arg name="vehicle_id" value="$(var vehicle_id)"/>
       <arg name="launch_vehicle_interface" value="$(var launch_vehicle_interface)"/>
+    </include>
+
+    <include file="$(find-pkg-share leo_vcu_driver)/launch/leo_vcu_driver.launch.xml" if="$(var vehicle)">
+      <arg name="leo_vcu_param_path" value="$(find-pkg-share leo_vcu_driver)/config/leo_vcu.param.yaml"/>
+      <arg name="vehicle_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
     </include>
   </group>
 
