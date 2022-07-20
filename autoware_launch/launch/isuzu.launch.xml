@@ -59,10 +59,10 @@
       <arg name="launch_vehicle_interface" value="$(var launch_vehicle_interface)"/>
     </include>
 
-    <include file="$(find-pkg-share leo_vcu_driver)/launch/leo_vcu_driver.launch.xml" if="$(var vehicle)">
-      <arg name="leo_vcu_param_path" value="$(find-pkg-share leo_vcu_driver)/config/leo_vcu.param.yaml"/>
-      <arg name="vehicle_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>
-    </include>
+<!--    <include file="$(find-pkg-share leo_vcu_driver)/launch/leo_vcu_driver.launch.xml" if="$(var vehicle)">-->
+<!--      <arg name="leo_vcu_param_path" value="$(find-pkg-share leo_vcu_driver)/config/leo_vcu.param.yaml"/>-->
+<!--      <arg name="vehicle_param_file" value="$(find-pkg-share $(var vehicle_model)_description)/config/vehicle_info.param.yaml"/>-->
+<!--    </include>-->
   </group>
 
   <!-- System -->
