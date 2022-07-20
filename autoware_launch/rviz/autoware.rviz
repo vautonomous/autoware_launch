@@ -7,18 +7,20 @@ Panels:
         - /System1/TF1
         - /System1/TF1/Frames1
         - /System1/Vehicle1
-        - /Map1
-        - /Sensing1
+        - /Sensing1/LiDAR1/ConcatenatePointCloud1
         - /Sensing1/LiDAR1/ConcatenatePointCloud1/Autocompute Value Bounds1
         - /Localization1/NDT1/PoseWithCovInitial1
         - /Localization1/NDT1/PoseWithCovAligned1
         - /Localization1/NDT1/Aligned1
-        - /Perception1
         - /Perception1/Segmentation1/NoGroundPointCloud1
         - /Perception1/ObjectRecognition1
+        - /Perception1/TrafficLight1/MapBasedDetectionResult1
         - /Planning1/ScenarioPlanning1/LaneDriving1/BehaviorPlanning1
+        - /Planning1/ScenarioPlanning1/LaneDriving1/BehaviorPlanning1/VirtualWall1
+        - /Planning1/ScenarioPlanning1/LaneDriving1/BehaviorPlanning1/DebugMarker1
+        - /front_image1/Topic1
       Splitter Ratio: 0.557669460773468
-    Tree Height: 384
+    Tree Height: 165
   - Class: rviz_common/Selection
     Name: Selection
   - Class: rviz_common/Tool Properties
@@ -46,8 +48,6 @@ Visualization Manager:
           Frame Timeout: 15
           Frames:
             All Enabled: false
-            POS_REF:
-              Value: false
             base_link:
               Value: true
             camera_left/camera_link:
@@ -68,8 +68,6 @@ Visualization Manager:
               Value: false
             ndt_base_link:
               Value: true
-            ned:
-              Value: false
             sensor_kit_base_link:
               Value: false
             velodyne_front:
@@ -414,7 +412,7 @@ Visualization Manager:
               Name: ConcatenatePointCloud
               Position Transformer: XYZ
               Selectable: false
-              Size (Pixels): 1
+              Size (Pixels): 3
               Size (m): 0.019999999552965164
               Style: Points
               Topic:
@@ -747,8 +745,7 @@ Visualization Manager:
                     Color: 119; 11; 32
                   Name: DetectedObjects
                   Namespaces:
-                    label: true
-                    shape: true
+                    {}
                   PEDESTRIAN:
                     Alpha: 0.9990000128746033
                     Color: 255; 192; 203
@@ -768,7 +765,7 @@ Visualization Manager:
                     Alpha: 0.9990000128746033
                     Color: 255; 255; 255
                   Value: true
-              Enabled: true
+              Enabled: false
               Name: Detection
             - Class: rviz_common/Group
               Displays:
@@ -796,12 +793,7 @@ Visualization Manager:
                     Color: 119; 11; 32
                   Name: TrackedObjects
                   Namespaces:
-                    label: true
-                    position covariance: true
-                    shape: true
-                    twist: true
-                    uuid: true
-                    velocity: true
+                    {}
                   PEDESTRIAN:
                     Alpha: 0.9990000128746033
                     Color: 255; 192; 203
@@ -821,7 +813,7 @@ Visualization Manager:
                     Alpha: 0.9990000128746033
                     Color: 255; 255; 255
                   Value: true
-              Enabled: true
+              Enabled: false
               Name: Tracking
             - Class: rviz_common/Group
               Displays:
@@ -849,14 +841,7 @@ Visualization Manager:
                     Color: 119; 11; 32
                   Name: PredictedObjects
                   Namespaces:
-                    label: true
-                    path: true
-                    path confidence: true
-                    position covariance: true
-                    shape: true
-                    twist: true
-                    uuid: true
-                    velocity: true
+                    {}
                   PEDESTRIAN:
                     Alpha: 0.9990000128746033
                     Color: 255; 192; 203
@@ -888,7 +873,7 @@ Visualization Manager:
                     Reliability Policy: Best Effort
                     Value: /perception/object_recognition/prediction/maneuver
                   Value: false
-              Enabled: true
+              Enabled: false
               Name: Prediction
           Enabled: true
           Name: ObjectRecognition
@@ -912,7 +897,7 @@ Visualization Manager:
               Enabled: true
               Name: MapBasedDetectionResult
               Namespaces:
-                {}
+                beam: true
               Topic:
                 Depth: 5
                 Durability Policy: Volatile
@@ -1255,7 +1240,7 @@ Visualization Manager:
                             Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/debug/blind_spot
                           Value: false
                         - Class: rviz_default_plugins/MarkerArray
-                          Enabled: false
+                          Enabled: true
                           Name: TrafficLight
                           Namespaces:
                             {}
@@ -1265,7 +1250,7 @@ Visualization Manager:
                             History Policy: Keep Last
                             Reliability Policy: Reliable
                             Value: /planning/scenario_planning/lane_driving/behavior_planning/behavior_velocity_planner/debug/traffic_light
-                          Value: false
+                          Value: true
                         - Class: rviz_default_plugins/MarkerArray
                           Enabled: false
                           Name: VirtualTrafficLight
@@ -1389,7 +1374,8 @@ Visualization Manager:
                           Enabled: true
                           Name: VirtualWall (SurroundObstacle)
                           Namespaces:
-                            {}
+                            stop_factor_text: true
+                            stop_virtual_wall: true
                           Topic:
                             Depth: 5
                             Durability Policy: Volatile
@@ -1667,6 +1653,20 @@ Visualization Manager:
         Reliability Policy: Reliable
         Value: /sensing/gnss/pose_with_covariance
       Value: true
+    - Class: rviz_default_plugins/Image
+      Enabled: false
+      Max Value: 1
+      Median window: 5
+      Min Value: 0
+      Name: front_image
+      Normalize Range: true
+      Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Best Effort
+        Value: /lucid_vision/camera_0/raw_image
+      Value: false
   Enabled: true
   Global Options:
     Background Color: 10; 10; 10
@@ -1735,7 +1735,7 @@ Visualization Manager:
   Value: true
   Views:
     Current:
-      Angle: -16.82501220703125
+      Angle: 0
       Class: rviz_default_plugins/TopDownOrtho
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
@@ -1745,11 +1745,11 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Scale: -4.8241868019104
-      Target Frame: map
-      Value: TopDownOrtho (rviz)
-      X: 199.62432861328125
-      Y: 196.77053833007812
+      Scale: 10
+      Target Frame: base_link
+      Value: TopDownOrtho (rviz_default_plugins)
+      X: 3.466766357421875
+      Y: -6.2767791748046875
     Saved:
       - Class: rviz_default_plugins/ThirdPersonFollower
         Distance: 18
@@ -1790,23 +1790,25 @@ Window Geometry:
   AutowareDateTimePanel:
     collapsed: false
   AutowareStatePanel:
-    collapsed: false
+    collapsed: true
   Displays:
-    collapsed: false
-  Height: 1058
-  Hide Left Dock: false
+    collapsed: true
+  Height: 1043
+  Hide Left Dock: true
   Hide Right Dock: false
   InitialPoseButtonPanel:
     collapsed: false
-  QMainWindow State: 000000ff00000000fd000000040000000000000153000003d3fc020000000ffb0000001200530065006c0065006300740069006f006e00000001e10000009b0000005700fffffffb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c0061007900730100000035000001b7000000b900fffffffc000001f1000000af000000af01000018fa000000000100000002fb0000000a0056006900650077007301000000000000033c000000fe00fffffffb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000000ffffffff0000008500fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261fb0000000c00430061006d0065007200610100000682000000eb0000000000000000fb0000000a0049006d0061006700650100000505000002680000000000000000fb0000002c0049006e0069007400690061006c0050006f007300650042007500740074006f006e00500061006e0065006c000000068f000000de0000006900fffffffb0000002c0049006e0069007400690061006c0050006f007300650042007500740074006f006e00500061006e0065006c000000068f000000de0000000000000000fb00000030005200650063006f0067006e006900740069006f006e0052006500730075006c0074004f006e0049006d006100670065000000022e000000c60000002600fffffffb0000002a004100750074006f0077006100720065004400610074006500540069006d006500500061006e0065006c01000002a5000000660000003c00fffffffb00000024004100750074006f00770061007200650053007400610074006500500061006e0065006c0100000310000000f8000000ce00ffffff000000010000015f000006fffc0200000002fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000e7a0000005afc0100000001fb0000000a00560069006500770073030000004e00000080000002e1000001970000000300000e7a0000005afc0100000002fb0000000800540069006d0065010000000000000e7a0000000000000000fb0000000800540069006d0065010000000000000450000000000000000000000626000003d300000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd000000040000000000000329000003c4fc0200000010fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000005700fffffffb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c0061007900730000000035000000dc000000b900fffffffc00000116000000c40000000000fffffffaffffffff0100000002fb0000000a0056006900650077007300000000000000033c000000fe00fffffffb0000001e0054006f006f006c002000500072006f00700065007200740069006500730000000000ffffffff0000008500fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261fb0000000c00430061006d0065007200610100000682000000eb0000000000000000fb0000000a0049006d0061006700650100000505000002680000000000000000fb0000002c0049006e0069007400690061006c0050006f007300650042007500740074006f006e00500061006e0065006c000000068f000000de0000006900fffffffb0000002c0049006e0069007400690061006c0050006f007300650042007500740074006f006e00500061006e0065006c000000068f000000de0000000000000000fb00000030005200650063006f0067006e006900740069006f006e0052006500730075006c0074004f006e0049006d00610067006500000001df000001370000002600fffffffb0000002a004100750074006f0077006100720065004400610074006500540069006d006500500061006e0065006c00000003ac0000004d0000003c00fffffffb00000024004100750074006f00770061007200650053007400610074006500500061006e0065006c000000031b000000de000000ce00fffffffb0000001600660072006f006e0074005f0069006d006100670065000000033f000000ba0000002600ffffff000000010000015f000006fffc0200000002fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000e7a0000005afc0100000001fb0000000a00560069006500770073030000004e00000080000002e1000001970000000300000e7a0000005afc0100000002fb0000000800540069006d0065010000000000000e7a0000000000000000fb0000000800540069006d006501000000000000045000000000000000000000077e000003c400000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   RecognitionResultOnImage:
-    collapsed: false
+    collapsed: true
   Selection:
     collapsed: false
   Tool Properties:
     collapsed: false
   Views:
-    collapsed: false
+    collapsed: true
   Width: 1918
   X: 0
-  Y: 20
+  Y: 36
+  front_image:
+    collapsed: false
