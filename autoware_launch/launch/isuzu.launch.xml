@@ -10,6 +10,7 @@
   <arg name="vehicle" default="true" description="launch vehicle"/>
   <arg name="system" default="true" description="launch system"/>
   <arg name="map" default="true" description="launch map"/>
+  <arg name="gui_point_converter" default="true" description="launch gui point converter"/>
   <arg name="sensing" default="true" description="launch sensing"/>
   <arg name="localization" default="true" description="launch localization"/>
   <arg name="perception" default="true" description="launch perception"/>
@@ -79,6 +80,12 @@
       <arg name="lanelet2_map_path" value="$(var map_path)/$(var lanelet2_map_file)"/>
       <arg name="pointcloud_map_path" value="$(var map_path)/$(var pointcloud_map_file)"/>
     </include>
+  </group>
+
+  <!-- GUI Point Converter -->
+  <group>
+    <include file="$(find-pkg-share local_pose_publisher)/launch/local_pose_publisher.launch.py"
+             if="$(var gui_point_converter)"/>
   </group>
 
   <!-- Localization -->
