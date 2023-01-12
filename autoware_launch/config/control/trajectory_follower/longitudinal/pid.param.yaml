@@ -64,7 +64,7 @@
     min_acc: -1.5
 
     # jerk limit
-    max_jerk: 2.0
+    max_jerk: 0.6
     min_jerk: -6.0
 
     # pitch
