@@ -4,7 +4,7 @@
     avoidance:
       resample_interval_for_planning: 0.3               # [m]
       resample_interval_for_output: 4.0                 # [m]
-      detection_area_right_expand_dist: 0.0             # [m]
+      detection_area_right_expand_dist: 1.0             # [m]
       detection_area_left_expand_dist: 1.0              # [m]
       drivable_area_right_bound_offset: 0.0             # [m]
       drivable_area_left_bound_offset: 0.0              # [m]
@@ -12,8 +12,8 @@
 
       # avoidance module common setting
       enable_bound_clipping: false
-      enable_avoidance_over_same_direction: true
-      enable_avoidance_over_opposite_direction: true
+      enable_avoidance_over_same_direction: false
+      enable_avoidance_over_opposite_direction: false
       enable_update_path_when_object_is_gone: false
       enable_safety_check: false
       enable_yield_maneuver: false
@@ -28,7 +28,7 @@
         truck: true
         bus: true
         trailer: true
-        unknown: false
+        unknown: true
         bicycle: false
         motorcycle: false
         pedestrian: false
@@ -36,10 +36,10 @@
       # For target object filtering
       target_filtering:
         # filtering moving objects
-        threshold_speed_object_is_stopped: 1.0          # [m/s]
+        threshold_speed_object_is_stopped: 0.5          # [m/s]
         threshold_time_object_is_moving: 1.0            # [s]
         # detection range
-        object_check_forward_distance: 150.0            # [m]
+        object_check_forward_distance: 50.0             # [m]
         object_check_backward_distance: 2.0             # [m]
         object_check_goal_distance: 20.0                # [m]
         # filtering parking objects
@@ -62,19 +62,19 @@
         # avoidance lateral parameters
         lateral:
           lateral_collision_margin: 1.0                 # [m]
-          lateral_collision_safety_buffer: 0.7          # [m]
+          lateral_collision_safety_buffer: 0.05         # [m]
           lateral_passable_safety_buffer: 0.0           # [m]
-          road_shoulder_safety_margin: 0.0              # [m]
+          road_shoulder_safety_margin: 0.01             # [m]
           avoidance_execution_lateral_threshold: 0.499
-          max_right_shift_length: 5.0
-          max_left_shift_length: 5.0
+          max_right_shift_length: 2.0
+          max_left_shift_length: 2.0
         # avoidance distance parameters
         longitudinal:
           prepare_time: 2.0                             # [s]
           longitudinal_collision_safety_buffer: 0.0     # [m]
           min_prepare_distance: 1.0                     # [m]
           min_avoidance_distance: 10.0                  # [m]
-          min_nominal_avoidance_speed: 7.0              # [m/s]
+          min_nominal_avoidance_speed: 1.5              # [m/s]
           min_sharp_avoidance_speed: 1.0                # [m/s]
 
       # For yield maneuver
@@ -92,8 +92,8 @@
 
         # lateral constraints
         lateral:
-          nominal_lateral_jerk: 0.2                     # [m/s3]
-          max_lateral_jerk: 1.0                         # [m/s3]
+          nominal_lateral_jerk: 0.1                     # [m/s3]
+          max_lateral_jerk: 0.4                         # [m/s3]
 
         # longitudinal constraints
         longitudinal:
