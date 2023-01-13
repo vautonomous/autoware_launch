@@ -1,6 +1,6 @@
 /**:
   ros__parameters:
-    delay_compensation_time: 0.65
+    delay_compensation_time: 0.50
 
     enable_smooth_stop: false
     enable_overshoot_emergency: true
