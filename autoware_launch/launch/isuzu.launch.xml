@@ -128,16 +128,17 @@
   </include>
 
   <!-- Tools -->
-<!--  <group>-->
-<!--    &lt;!&ndash; Rviz &ndash;&gt;-->
-<!--    <node-->
-<!--      pkg="rviz2"-->
-<!--      exec="rviz2"-->
-<!--      name="rviz2"-->
-<!--      output="screen"-->
-<!--      args="-d $(find-pkg-share autoware_launch)/rviz/autoware.rviz -s $(find-pkg-share autoware_launch)/rviz/image/autoware.png"-->
-<!--      if="$(var rviz)"-->
-<!--    />-->
+  <group>
+    <!-- Rviz -->
+    <node
+      pkg="rviz2"
+      exec="rviz2"
+      name="rviz2"
+      output="screen"
+      args="-d $(find-pkg-share autoware_launch)/rviz/autoware.rviz -s $(find-pkg-share autoware_launch)/rviz/image/autoware.png"
+      if="$(var rviz)"
+    />
+  </group>
 
 <!--    &lt;!&ndash; Web Controller &ndash;&gt;-->
 <!--&lt;!&ndash;    <include file="$(find-pkg-share web_controller)/launch/web_controller.launch.xml"/>&ndash;&gt;-->
