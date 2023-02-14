@@ -93,10 +93,9 @@
   </group>
 
   <!-- Localization -->
-  <group>
+  <group unless="$(var is_primary)">
     <include file="$(find-pkg-share tier4_localization_launch)/launch/localization.launch.xml"
              if="$(var localization)">
-      <arg name="is_primary" value="$(var is_primary)"/>
     </include>
   </group>
 
